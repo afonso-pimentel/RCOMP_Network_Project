@@ -1,0 +1,55 @@
+
+/////////////////////////////////////////
+In router
+/////////////////////////////////////////
+
+enable
+config terminal
+interface GigabitEthernet 0/0/0.1
+encapsulation dot1Q 515
+ip address 172.18.189.129 255.255.255.192
+interface GigabitEthernet 0/0/0.2
+encapsulation dot1Q 516
+ip address 172.18.189.65 255.255.255.192
+interface GigabitEthernet 0/0/0.3
+encapsulation dot1Q 517
+ip address 172.18.189.1 255.255.255.192
+interface GigabitEthernet 0/0/0.4
+encapsulation dot1Q 518
+ip address 172.18.189.225 255.255.255.224
+interface GigabitEthernet 0/0/0.5
+encapsulation dot1Q 519
+ip address 172.18.189.193 255.255.255.224
+interface GigabitEthernet 0/2/0
+ip address 172.18.190.5 255.255.254.0
+interface GigabitEthernet 0/0/0
+no shutdown
+interface GigabitEthernet 0/2/0
+no shutdown
+exit
+exit
+
+
+config terminal
+ip dhcp excluded-address 172.18.189.129 172.18.189.129
+ip dhcp pool VLANB5F0
+network 172.18.189.128 255.255.255.192
+default-router 172.18.189.129
+dns-server 172.18.189.226
+ip dhcp excluded-address 172.18.189.65 172.18.189.65
+ip dhcp pool VLANB5F1
+network 172.18.189.64 255.255.255.192
+default-router 172.18.189.65
+dns-server 172.18.189.226
+ip dhcp excluded-address 172.18.189.1 172.18.189.1
+ip dhcp pool VLANB5WF
+network 172.18.189.0 255.255.255.192
+default-router 172.18.189.1
+dns-server 172.18.189.226
+ip dhcp excluded-address 172.18.189.193 172.18.189.193
+ip dhcp pool VLANB5VIP
+default-router 172.18.189.193
+option 150 ip 172.18.189.193
+network 172.18.189.192 255.255.255.224
+exit
+exit

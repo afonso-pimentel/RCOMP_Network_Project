@@ -1,0 +1,235 @@
+!
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname Router
+!
+!
+!
+!
+!
+ip dhcp pool VLANB1F0
+ network 172.18.185.128 255.255.255.192
+ default-router 172.18.185.129
+ dns-server 172.18.184.130
+ip dhcp pool VLANB1F1
+ network 172.18.185.0 255.255.255.128
+ default-router 172.18.185.1
+ dns-server 172.18.184.130
+ip dhcp pool VLANB1WF
+ network 172.18.184.0 255.255.255.128
+ default-router 172.18.184.1
+ dns-server 172.18.184.130
+ip dhcp pool VLANB1VIP
+ network 172.18.185.192 255.255.255.192
+ default-router 172.18.185.193
+ option 150 ip 172.18.185.193
+ dns-server 172.18.184.130
+!
+!
+!
+no ip cef
+no ipv6 cef
+!
+!
+!
+!
+license udi pid CISCO2811/K9 sn FTX1017C6WC-
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface FastEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface GigabitEthernet0/0/0
+ no ip address
+ ip access-group 151 in
+!
+interface GigabitEthernet0/0/0.1
+ encapsulation dot1Q 495
+ ip address 172.18.185.129 255.255.255.192
+!
+interface GigabitEthernet0/0/0.2
+ encapsulation dot1Q 496
+ ip address 172.18.185.1 255.255.255.128
+!
+interface GigabitEthernet0/0/0.3
+ encapsulation dot1Q 497
+ ip address 172.18.184.1 255.255.255.128
+!
+interface GigabitEthernet0/0/0.4
+ encapsulation dot1Q 498
+ ip address 172.18.184.129 255.255.255.128
+!
+interface GigabitEthernet0/0/0.5
+ encapsulation dot1Q 499
+ ip address 172.18.185.193 255.255.255.192
+!
+interface GigabitEthernet0/2/0
+ ip address 172.18.190.6 255.255.254.0
+ ip access-group 152 in
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+router ospf 1
+ log-adjacency-changes
+ network 172.18.184.0 0.0.1.255 area 1
+ network 172.18.190.0 0.0.1.255 area 0
+!
+router rip
+!
+ip classless
+!
+ip flow-export version 9
+!
+!
+access-list 151 permit ip 172.18.184.0 0.0.1.255 any
+access-list 151 permit icmp any any echo
+access-list 151 permit icmp any any echo-reply
+access-list 151 deny ip any 172.18.184.1 0.0.0.128
+access-list 151 permit udp 172.18.184.1 0.0.0.128 any eq domain
+access-list 151 permit tcp 172.18.184.1 0.0.0.128 any eq www
+access-list 151 permit tcp 172.18.184.1 0.0.0.128 any eq 443
+access-list 151 permit udp host 172.18.184.0 any eq bootps
+access-list 151 permit udp any host 172.18.184.0 eq bootpc
+access-list 151 permit tcp 172.18.185.129 0.0.0.64 any eq 2000
+access-list 151 permit udp 172.18.185.129 0.0.0.64 any eq 2000
+access-list 152 deny ip 172.18.184.0 0.0.1.255 any
+access-list 152 permit ip any any
+access-list 152 permit icmp any any echo
+access-list 152 permit icmp any any echo-reply
+access-list 152 permit ospf 172.18.190.0 0.0.1.255 host 172.18.190.6
+access-list 152 permit tcp 172.18.190.0 0.0.1.255 172.18.185.129 0.0.0.64 eq 2000
+access-list 152 permit udp 172.18.190.0 0.0.1.255 172.18.185.129 0.0.0.64 eq 2000
+!
+!
+!
+!
+!
+!
+dial-peer voice 11 voip
+ destination-pattern 5...
+ session target ipv4:172.18.190.5
+!
+dial-peer voice 12 voip
+ destination-pattern 2...
+ session target ipv4:172.18.190.2
+!
+dial-peer voice 13 voip
+ destination-pattern 3...
+ session target ipv4:172.18.190.3
+!
+dial-peer voice 14 voip
+ destination-pattern 4...
+ session target ipv4:172.18.190.4
+!
+dial-peer voice 15 voip
+ destination-pattern 5...
+ session target ipv4:172.18.190.5
+!
+telephony-service
+ max-ephones 10
+ max-dn 10
+ ip source-address 172.18.185.193 port 2000
+ auto assign 1 to 10
+ auto assign 1 to 4
+!
+ephone-dn 1
+ number 1001
+!
+ephone-dn 2
+ number 1002
+!
+ephone-dn 3
+ number 1003
+!
+ephone-dn 4
+ number 1004
+!
+ephone-dn 5
+ number 1005
+!
+ephone-dn 6
+ number 1006
+!
+ephone-dn 7
+ number 1007
+!
+ephone-dn 8
+ number 1008
+!
+ephone-dn 9
+ number 1009
+!
+ephone-dn 10
+ number 1010
+!
+ephone 1
+ device-security-mode none
+ mac-address 0000.0CED.71C4
+ type 7960
+ button 1:1
+!
+ephone 2
+ device-security-mode none
+ mac-address 0001.960C.2086
+ type 7960
+ button 1:2
+!
+ephone 3
+ device-security-mode none
+ mac-address 000C.8531.78BC
+ type 7960
+ button 1:3
+!
+ephone 4
+ device-security-mode none
+ mac-address 00E0.F723.7197
+ type 7960
+ button 1:4
+!
+ephone 5
+ device-security-mode none
+ mac-address 0090.2BBE.4951
+ type 7960
+ button 1:5
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+!
+end
+

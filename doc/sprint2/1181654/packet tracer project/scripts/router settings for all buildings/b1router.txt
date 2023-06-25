@@ -1,0 +1,52 @@
+
+
+config terminal
+interface GigabitEthernet 0/0/0.1
+encapsulation dot1Q 495
+ip address 172.18.185.129 255.255.255.192
+interface GigabitEthernet 0/0/0.2
+encapsulation dot1Q 496
+ip address 172.18.185.1 255.255.255.128
+interface GigabitEthernet 0/0/0.3
+encapsulation dot1Q 497
+ip address 172.18.184.1 255.255.255.128
+interface GigabitEthernet 0/0/0.4
+encapsulation dot1Q 498
+ip address 172.18.184.129 255.255.255.128
+interface GigabitEthernet 0/0/0.5
+encapsulation dot1Q 499
+ip address 172.18.185.193 255.255.255.192
+interface GigabitEthernet 0/2/0
+ip address 172.18.190.6 255.255.254.0
+interface GigabitEthernet 0/0/0
+no shutdown
+interface GigabitEthernet 0/2/0
+no shutdown
+exit
+exit
+
+
+config terminal
+ip dhcp pool VLANB1F0
+network 172.18.185.128 255.255.255.192
+default-router 172.18.185.129
+ip dhcp pool VLANB1F1
+network 172.18.185.0 255.255.255.128
+default-router 172.18.185.1
+ip dhcp pool VLANB1WF
+network 172.18.184.0 255.255.255.128
+default-router 172.18.184.1
+ip dhcp pool VLANB1DMZ
+network 172.18.184.128 255.255.255.128
+default-router 172.18.184.129
+ip dhcp pool VLANB1VIP
+network 172.18.185.192 255.255.255.192
+default-router 172.18.185.193
+exit
+exit
+
+
+
+config terminal
+ip route 0.0.0.0 0.0.0.0 172.18.190.1
+

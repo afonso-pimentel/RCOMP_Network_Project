@@ -1,0 +1,42 @@
+////////////////////////////////////////////////////////////////////
+(run on building 1 MC router) (all buildings included)
+////////////////////////////////////////////////////////////////////
+
+
+# HTTP HTTPS use TCP on ports 80 and 443:
+&
+$ DNS use UDP and TCP on port 53:
+
+enable
+config terminal
+interface Gig0/0/0
+ip nat inside
+interface Gig0/2/0
+ip nat outside
+
+
+ip nat inside source static tcp 172.18.184.131 80 15.203.48.169 10011
+ip nat inside source static tcp 172.18.184.131 443 15.203.48.169 10012
+ip nat inside source static tcp 172.18.184.130 53 15.203.48.169 10013
+ip nat inside source static udp 172.18.184.130 53 15.203.48.169 10013
+
+ip nat inside source static tcp 172.18.186.227 80 15.203.48.169 10021
+ip nat inside source static tcp 172.18.186.227 443 15.203.48.169 10022
+ip nat inside source static tcp 172.18.186.226 53 15.203.48.169 10023
+ip nat inside source static udp 172.18.186.226 53 15.203.48.169 10023
+
+ip nat inside source static tcp 172.18.187.195 80 15.203.48.169 10031
+ip nat inside source static tcp 172.18.187.195 443 15.203.48.169 10032
+ip nat inside source static tcp 172.18.187.194 53 15.203.48.169 10033
+ip nat inside source static udp 172.18.187.194 53 15.203.48.169 10033
+
+ip nat inside source static tcp 172.18.188.243 80 15.203.48.169 10041
+ip nat inside source static tcp 172.18.188.243 443 15.203.48.169 10042
+ip nat inside source static tcp 172.18.188.242 53 15.203.48.169 10043
+ip nat inside source static udp 172.18.188.242 53 15.203.48.169 10043
+
+ip nat inside source static tcp 172.18.189.227 80 15.203.48.169 10051
+ip nat inside source static tcp 172.18.189.227 443 15.203.48.169 10052
+ip nat inside source static tcp 172.18.189.226 53 15.203.48.169 10053
+ip nat inside source static udp 172.18.189.226 53 15.203.48.169 10053
+exit

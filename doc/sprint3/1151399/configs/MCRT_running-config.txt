@@ -1,0 +1,123 @@
+!
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname Router
+!
+!
+!
+!
+!
+!
+!
+!
+no ip cef
+no ipv6 cef
+!
+!
+!
+!
+license udi pid CISCO2811/K9 sn FTX10175S7Q-
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ no ip address
+ ip nat inside
+ duplex auto
+ speed auto
+ shutdown
+!
+interface FastEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface GigabitEthernet0/0/0
+ ip address 172.18.190.1 255.255.254.0
+ ip nat inside
+!
+interface GigabitEthernet0/2/0
+ ip address 15.203.48.169 255.255.255.252
+ ip nat outside
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+router ospf 1
+ log-adjacency-changes
+ network 172.18.184.0 0.0.1.255 area 1
+ network 172.18.186.0 0.0.0.255 area 2
+ network 172.18.187.0 0.0.0.255 area 3
+ network 172.18.188.0 0.0.0.255 area 4
+ network 172.18.189.0 0.0.0.255 area 5
+ network 172.18.190.0 0.0.1.255 area 0
+ default-information originate
+!
+router rip
+!
+ip nat inside source static tcp 172.18.189.227 80 10.0.0.52 80 
+ip nat inside source static tcp 172.18.189.227 443 10.0.0.52 443 
+ip nat inside source static tcp 172.18.189.226 53 10.0.0.51 53 
+ip nat inside source static udp 172.18.189.226 53 10.0.0.51 53 
+ip nat inside source static tcp 172.18.184.131 80 15.203.48.169 10011 
+ip nat inside source static tcp 172.18.184.131 443 15.203.48.169 10012 
+ip nat inside source static tcp 172.18.184.130 53 15.203.48.169 10013 
+ip nat inside source static udp 172.18.184.130 53 15.203.48.169 10013 
+ip classless
+ip route 0.0.0.0 0.0.0.0 190.0.0.2 
+ip route 0.0.0.0 0.0.0.0 15.203.48.170 
+!
+ip flow-export version 9
+!
+!
+access-list 101 deny ip 172.18.185.0 0.0.0.255 any
+access-list 102 deny ip 172.18.190.0 0.0.1.255 any
+access-list 103 permit ip 172.18.185.192 0.0.0.31 any
+access-list 104 permit icmp any any echo
+access-list 105 permit icmp any any echo-reply
+access-list 106 deny ip any 172.18.185.192 0.0.0.31
+access-list 107 permit udp 172.18.185.192 0.0.0.31 any eq domain
+access-list 109 permit tcp 172.18.185.192 0.0.0.31 any eq www
+access-list 110 permit tcp 172.18.185.192 0.0.0.31 any eq 443
+access-list 111 deny ip any any
+access-list 112 permit ip 0.0.0.0 0.0.0.1 172.18.190.0 0.0.0.1
+access-list 113 permit ip 255.255.255.254 0.0.0.1 172.18.190.0 0.0.0.1
+access-list 114 permit udp host 172.18.190.1 any eq tftp
+access-list 116 permit ospf host 172.18.190.1 any
+!
+!
+!
+!
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+!
+end
+

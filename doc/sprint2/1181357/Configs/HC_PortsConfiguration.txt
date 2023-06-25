@@ -1,0 +1,22 @@
+enable
+configure terminal
+interface FastEthernet0/1
+switchport mode trunk
+interface FastEthernet1/1
+switchport mode trunk
+interface FastEthernet2/1
+switchport mode trunk
+interface FastEthernet3/1
+switchport mode trunk
+interface FastEthernet4/1
+switchport mode trunk
+interface FastEthernet5/1
+switchport mode trunk
+interface FastEthernet6/1
+switchport mode trunk
+interface FastEthernet7/1
+switchport mode trunk
+interface FastEthernet8/1
+switchport mode trunk
+interface FastEthernet9/1
+switchport mode trunk

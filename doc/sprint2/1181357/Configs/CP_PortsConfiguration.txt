@@ -1,0 +1,27 @@
+enable
+configure terminal
+interface FastEthernet0/1
+switchport mode trunk
+interface FastEthernet1/1
+switchport mode access
+switchport access vlan 505
+interface FastEthernet2/1
+switchport mode access
+switchport access vlan 506
+interface FastEthernet3/1
+switchport mode access
+switchport access vlan 507
+interface FastEthernet4/1
+switchport mode access
+switchport access vlan 508
+interface FastEthernet5/1
+switchport mode access
+switchport access vlan 509
+interface FastEthernet6/1
+switchport mode access
+interface FastEthernet7/1
+switchport mode access
+interface FastEthernet8/1
+switchport mode access
+interface FastEthernet9/1
+switchport mode access

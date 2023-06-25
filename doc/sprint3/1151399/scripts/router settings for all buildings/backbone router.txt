@@ -1,0 +1,13 @@
+
+config terminal
+interface Gig 0/3/0
+ip add 172.18.190.1 255.255.254.0
+no shutdown
+interface Gig 0/2/0
+ip add 15.203.48.169 255.255.255.252
+no shutdown
+exit
+exit
+
+
+

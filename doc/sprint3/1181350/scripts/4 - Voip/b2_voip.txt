@@ -1,0 +1,61 @@
+
+//////////////////////////////////////////
+(in the switch where the phone connects to)
+//////////////////////////////////////////
+
+a) switch configuration:
+
+(same port on different switchs)
+enable
+config terminal
+interface GigabitEthernet6/1
+switchport mode access
+switchport voice vlan 504
+no switchport access vlan
+exit
+exit
+
+//////////////////////////////////////////
+(in the router of the building)
+//////////////////////////////////////////
+
+c) Automatic phone registration and directory number assignment in router
+enable
+config terminal
+telephony-service
+max-ephones 4
+max-dn 4
+ip source-address 172.18.186.241 port 2000
+auto assign 1 to 4
+ephone-dn 1
+number 2001
+ephone-dn 2
+number 2002
+ephone-dn 3
+number 2003
+ephone-dn 4
+number 2004
+exit
+exit
+
+d) Configure phone calls forwarding between the two ITS servers.
+
+enable
+config terminal
+dial-peer voice 21 voip
+destination-pattern 1...
+session target ipv4:172.18.190.6
+dial-peer voice 23 voip
+destination-pattern 3...
+session target ipv4:172.18.190.3
+dial-peer voice 24 voip
+destination-pattern 4...
+session target ipv4:172.18.190.4
+dial-peer voice 25 voip
+destination-pattern 5...
+session target ipv4:172.18.190.5
+exit
+exit
+
+
+

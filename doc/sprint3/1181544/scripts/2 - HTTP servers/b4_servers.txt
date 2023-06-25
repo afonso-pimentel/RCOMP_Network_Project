@@ -1,0 +1,17 @@
+//////////////////////////////////////////
+http server:
+//////////////////////////////////////////
+
+set static ip in config interface
+
+default gateway:
+172.18.188.241
+
+DNS server:
+172.18.188.242
+
+Http server ip and mask
+172.18.188.243
+255.255.255.240
+
+

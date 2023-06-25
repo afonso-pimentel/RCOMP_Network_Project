@@ -1,0 +1,96 @@
+!
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname Router
+!
+!
+!
+!
+!
+!
+!
+!
+no ip cef
+no ipv6 cef
+!
+!
+!
+!
+license udi pid CISCO2811/K9 sn FTX10171S8G-
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface FastEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface GigabitEthernet0/0/0
+ no ip address
+ shutdown
+!
+interface GigabitEthernet0/2/0
+ ip address 15.203.48.169 255.255.255.252
+!
+interface GigabitEthernet0/3/0
+ ip address 172.18.190.1 255.255.254.0
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+router rip
+!
+ip classless
+ip route 172.18.186.0 255.255.255.0 172.18.190.2 
+ip route 172.18.187.0 255.255.255.0 172.18.190.3 
+ip route 172.18.188.0 255.255.255.0 172.18.190.4 
+ip route 172.18.189.0 255.255.255.0 172.18.190.5 
+ip route 172.18.184.0 255.255.254.0 172.18.190.6 
+ip route 0.0.0.0 0.0.0.0 15.203.48.171 
+!
+ip flow-export version 9
+!
+!
+!
+!
+!
+!
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+!
+end
+

@@ -1,0 +1,21 @@
+
+config terminal
+interface Gig 0/3/0
+ip add 172.18.190.1 255.255.254.0
+no shutdown
+interface Gig 0/2/0
+ip add 15.203.48.169 255.255.255.252
+no shutdown
+exit
+exit
+
+config terminal
+ip route 172.18.186.0 255.255.254.0 172.18.190.2
+ip route 172.18.187.0 255.255.254.0 172.18.190.3
+ip route 172.18.188.0 255.255.254.0 172.18.190.4
+ip route 172.18.189.0 255.255.254.0 172.18.190.5
+ip route 172.18.184.0 255.255.254.0 172.18.190.6
+ip route 0.0.0.0 0.0.0.0 15.203.48.171
+exit
+exit
+

@@ -1,0 +1,51 @@
+# 1
+config terminal
+interface FastEthernet 0/1.1
+encapsulation dot1Q 498
+ip address 172.18.184.129 255.255.255.128
+exit
+interface FastEthernet 0/1
+no shutdown
+exit
+ip dhcp pool VLANB1DMZ
+network 172.18.184.128 255.255.255.128
+default-router 172.18.186.129
+
+#3
+config terminal
+interface FastEthernet 0/1.1
+encapsulation dot1Q 508
+ip address 172.18.187.193 255.255.255.224
+exit
+interface FastEthernet 0/1
+no shutdown
+exit
+ip dhcp pool VLANB3DMZ
+network 172.18.187.192 255.255.255.224
+default-router 172.18.187.193
+
+#4
+config terminal
+interface FastEthernet 0/1.1
+encapsulation dot1Q 513
+ip address 172.18.188.241 255.255.255.240
+exit
+interface FastEthernet 0/1
+no shutdown
+exit
+ip dhcp pool VLANB3DMZ
+network 172.18.188.240 255.255.255.240
+default-router 172.18.188.241
+
+#5
+config terminal
+interface FastEthernet 0/1.1
+encapsulation dot1Q 518
+ip address 172.18.189.225 255.255.255.224
+exit
+interface FastEthernet 0/1
+no shutdown
+exit
+ip dhcp pool VLANB3DMZ
+network 172.18.189.224 255.255.255.224
+default-router 172.18.189.225

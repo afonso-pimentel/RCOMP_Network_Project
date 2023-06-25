@@ -1,0 +1,72 @@
+
+//////////////////////////////////////////
+(in the switch where the phone connects to)
+//////////////////////////////////////////
+
+a) switch configuration:
+
+(same port on different switchs)
+
+config terminal
+interface Fa5/1
+switchport mode access
+switchport voice vlan 509
+no switchport access vlan
+
+
+config terminal
+interface Fa5/1
+switchport mode access
+switchport voice vlan 509
+no switchport access vlan
+
+//////////////////////////////////////////
+(in the router of the building)
+//////////////////////////////////////////
+
+b) dhcp configuration on building router:
+
+ip dhcp pool VLANB3VIP
+default-router 172.18.187.225
+network 172.18.187.224 255.255.255.224
+
+
+c) Automatic phone registration and directory number assignment in router
+
+config terminal
+telephony-service
+max-ephones 4
+max-dn 4
+ip source-address 172.18.187.225 port 2000
+auto assign 1 to 4
+ephone-dn 1
+number 3001
+ephone-dn 2
+number 3002
+ephone-dn 3
+number 3003
+ephone-dn 4
+number 3004
+
+
+
+d) Configure phone calls forwarding between the two ITS servers.
+
+config terminal
+dial-peer voice 31 voip
+destination-pattern 6...
+session target ipv4:172.18.190.8
+dial-peer voice 32 voip
+destination-pattern 7...
+session target ipv4:172.18.190.9
+dial-peer voice 34 voip
+destination-pattern 8...
+session target ipv4:172.18.190.10
+dial-peer voice 35 voip
+destination-pattern 9...
+session target ipv4:172.18.190.11
+
+
+
+
+

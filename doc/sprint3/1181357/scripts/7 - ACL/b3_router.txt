@@ -1,0 +1,108 @@
+
+
+
+
+////////////////////////////////////////////////////////////////////
+(run on building 3 IC router)
+////////////////////////////////////////////////////////////////////
+
+
+(script explained)
+
+enable
+config terminal
+no access-list 131
+access-list 131 permit ip 172.18.187.0 0.0.0.255 any              1 block internal spoofing
+access-list 131 permit icmp any any echo                          2 allow all icmp requests
+access-list 131 permit icmp any any echo-reply                    2 allow all icmp responses
+access-list 131 deny ip any 172.18.187.192 0.0.0.31               3 block access to dmz
+access-list 131 permit udp 172.18.187.192 0.0.0.31 any eq 53      3 allow access to dmz through DNS
+access-list 131 permit tcp 172.18.187.192 0.0.0.31 any eq 53      3 allow access to dmz through DNS
+access-list 131 permit tcp 172.18.187.192 0.0.0.31 any eq 80      3 allow access to dmz through HTTP
+access-list 131 permit tcp 172.18.187.192 0.0.0.31 any eq 443     3 allow access to dmz through HTTPS
+access-list 131 permit udp 172.18.189.0 0.0.0.0 any eq 67         4 allow DHCP server
+access-list 131 permit udp any 172.18.189.0 0.0.0.0 eq 68         4 allow DHCP client
+access-list 131 permit tcp 172.18.187.224 0.0.0.31 any eq 2000    5 allow voip out
+access-list 131 permit udp 172.18.187.224 0.0.0.31 any eq 2000    5 allow voip out
+interface GigabitEthernet 0/0/0
+ip access-group 131 in
+exit
+exit
+
+config terminal
+no access-list 132
+access-list 132 deny ip 172.18.187.0 0.0.0.255 any                                  1 block external spoofing
+access-list 132 permit any any                                                      1 and 5 allow other
+access-list 132 permit icmp any any echo                                            2 allow all icmp requests
+access-list 132 permit icmp any any echo-reply                                      2 allow all icmp responses
+access-list 132 permit ospf 172.18.190.0 0.0.1.255 172.18.190.3 0.0.0.0             4 allow ospf
+access-list 132 permit tcp 172.18.190.0 0.0.1.255 172.18.187.224 0.0.0.31 eq 2000   5 allow voip in
+access-list 132 permit udp 172.18.190.0 0.0.1.255 172.18.187.224 0.0.0.31 eq 2000   5 allow voip in
+interface GigabitEthernet 0/2/0
+ip access-group 132 in
+exit
+exit
+
+
+
+(script for running on router)
+
+config terminal
+no access-list 131
+access-list 131 permit ip 172.18.187.0 0.0.0.255 any
+access-list 131 permit icmp any any echo
+access-list 131 permit icmp any any echo-reply
+access-list 131 deny ip any 172.18.187.192 0.0.0.31
+access-list 131 permit udp 172.18.187.192 0.0.0.31 any eq 53
+access-list 131 permit tcp 172.18.187.192 0.0.0.31 any eq 53
+access-list 131 permit tcp 172.18.187.192 0.0.0.31 any eq 80
+access-list 131 permit tcp 172.18.187.192 0.0.0.31 any eq 443
+access-list 131 permit udp 172.18.189.0 0.0.0.0 any eq 67
+access-list 131 permit udp any 172.18.189.0 0.0.0.0 eq 68
+access-list 131 permit tcp 172.18.187.224 0.0.0.31 any eq 2000
+access-list 131 permit udp 172.18.187.224 0.0.0.31 any eq 2000
+interface GigabitEthernet 0/0/0
+ip access-group 131 in
+exit
+
+
+
+config terminal
+no access-list 132
+access-list 132 deny ip 172.18.187.0 0.0.0.255 any
+access-list 132 permit ip any any
+access-list 132 permit icmp any any echo
+access-list 132 permit icmp any any echo-reply
+access-list 132 permit ospf 172.18.190.0 0.0.1.255 172.18.190.3 0.0.0.0
+access-list 132 permit tcp 172.18.190.0 0.0.1.255 172.18.187.224 0.0.0.31 eq 2000
+access-list 132 permit udp 172.18.190.0 0.0.1.255 172.18.187.224 0.0.0.31 eq 2000
+interface GigabitEthernet 0/2/0
+ip access-group 132 in
+exit
+
+
+
+
+
+
+notes: 
+
+External spoofing: this applies to incoming traffic to a local network, for the
+sake of the local network’s security, any incoming packet with a source address
+belonging to the local network is spoofing and should be blocked.
+
+Internal spoofing: this applies to outgoing traffic from a local network, for the
+sake of other networks’ security, any outgoing packet with a source address
+that doesn’t belong to the local network, is spoofing and should be blocked.
+
+
+access-list NNN ACTION PROTOCOL SOURCE-IP-ADDRESS DESTINATION-IP-ADDRESS
+
+
+test with PDU tool:
+select pdu tool 
+select test pc (the one after ISP)
+destination: 172.18.189.130
+source: 172.18.189.67
+Define sequence number as 1, and one shot time as 5 seconds.
+

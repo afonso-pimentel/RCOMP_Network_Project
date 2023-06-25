@@ -1,0 +1,19 @@
+
+
+
+#set domain in IC switch:
+
+enable
+configure terminal
+vtp domain rc22nag2
+vtp mode server
+exit
+exit
+
+
+#set slave switchs:
+
+enable
+configure terminal
+vtp domain rc22nag2
+vtp mode client

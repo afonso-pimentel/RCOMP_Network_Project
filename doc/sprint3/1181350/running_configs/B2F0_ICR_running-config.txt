@@ -1,0 +1,183 @@
+!
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname Router
+!
+!
+!
+!
+ip dhcp excluded-address 172.18.186.193
+ip dhcp excluded-address 172.18.186.129
+ip dhcp excluded-address 172.18.186.1
+ip dhcp excluded-address 172.18.186.241
+!
+ip dhcp pool VLANB2F0
+ network 172.18.186.192 255.255.255.224
+ default-router 172.18.186.193
+ dns-server 172.18.186.226
+ip dhcp pool VLANB2F1
+ network 172.18.186.128 255.255.255.192
+ default-router 172.18.186.129
+ dns-server 172.18.186.226
+ip dhcp pool VLANB2WF
+ network 172.18.186.0 255.255.255.128
+ default-router 172.18.186.1
+ dns-server 172.18.186.226
+ip dhcp pool VLANB2VIP
+ network 172.18.186.240 255.255.255.240
+ default-router 172.18.186.241
+ option 150 ip 172.18.186.241
+!
+!
+!
+no ip cef
+no ipv6 cef
+!
+!
+!
+!
+license udi pid CISCO2811/K9 sn FTX10171508-
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface FastEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface GigabitEthernet0/0/0
+ no ip address
+ ip access-group 121 in
+!
+interface GigabitEthernet0/0/0.1
+ encapsulation dot1Q 500
+ ip address 172.18.186.193 255.255.255.224
+!
+interface GigabitEthernet0/0/0.2
+ encapsulation dot1Q 501
+ ip address 172.18.186.129 255.255.255.192
+!
+interface GigabitEthernet0/0/0.3
+ encapsulation dot1Q 502
+ ip address 172.18.186.1 255.255.255.128
+!
+interface GigabitEthernet0/0/0.4
+ encapsulation dot1Q 503
+ ip address 172.18.186.225 255.255.255.240
+!
+interface GigabitEthernet0/0/0.5
+ encapsulation dot1Q 504
+ ip address 172.18.186.241 255.255.255.240
+!
+interface GigabitEthernet0/2/0
+ ip address 172.18.190.2 255.255.254.0
+ ip access-group 122 in
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+router ospf 1
+ log-adjacency-changes
+ network 172.18.186.0 0.0.0.255 area 2
+ network 172.18.190.0 0.0.1.255 area 0
+!
+ip classless
+!
+ip flow-export version 9
+!
+!
+!
+!
+!
+!
+!
+!
+dial-peer voice 21 voip
+ destination-pattern 1...
+ session target ipv4:172.18.190.6
+!
+dial-peer voice 23 voip
+ destination-pattern 3...
+ session target ipv4:172.18.190.3
+!
+dial-peer voice 24 voip
+ destination-pattern 4...
+ session target ipv4:172.18.190.4
+!
+dial-peer voice 25 voip
+ destination-pattern 5...
+ session target ipv4:172.18.190.5
+!
+telephony-service
+ max-ephones 4
+ max-dn 4
+ ip source-address 172.18.186.241 port 2000
+ auto assign 1 to 4
+!
+ephone-dn 1
+ number 2001
+!
+ephone-dn 2
+ number 2002
+!
+ephone-dn 3
+ number 2003
+!
+ephone-dn 4
+ number 2004
+!
+ephone 1
+ device-security-mode none
+ mac-address 0060.2F65.956C
+ type 7960
+ button 1:1
+!
+ephone 2
+ device-security-mode none
+ mac-address 0050.0F55.3180
+ type 7960
+ button 1:2
+!
+ephone 3
+ device-security-mode none
+ mac-address 0002.1663.4331
+ type 7960
+ button 1:3
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+!
+end
+

@@ -1,0 +1,35 @@
+////////////////////////////////////////////////////////////////////
+(run on building 2 IC router)
+////////////////////////////////////////////////////////////////////
+
+enable
+config terminal
+no access-list 121
+access-list 121 permit ip 172.18.186.0 0.0.0.255 any
+access-list 121 permit icmp any any echo
+access-list 121 permit icmp any any echo-reply
+access-list 121 deny ip any 172.18.186.224 0.0.0.31
+access-list 121 permit udp 172.18.186.224 0.0.0.31 any eq 53
+access-list 121 permit tcp 172.18.186.224 0.0.0.31 any eq 53
+access-list 121 permit tcp 172.18.186.224 0.0.0.31 any eq 80
+access-list 121 permit tcp 172.18.186.224 0.0.0.31 any eq 443
+access-list 121 permit udp 172.18.186.0 0.0.0.0 any eq 67
+access-list 121 permit udp any 172.18.186.0 0.0.0.0 eq 68
+access-list 121 permit tcp 172.18.186.240 0.0.0.31 any eq 2000
+access-list 121 permit udp 172.18.186.240 0.0.0.31 any eq 2000
+interface GigabitEthernet 0/0/0
+ip access-group 121 in
+exit
+
+config terminal
+no access-list 122
+access-list 122 deny ip 172.18.186.0 0.0.0.255 any
+access-list 122 permit ip any any
+access-list 122 permit icmp any any echo
+access-list 122 permit icmp any any echo-reply
+access-list 122 permit ospf 172.18.190.0 0.0.1.255 172.18.190.2 0.0.0.0
+access-list 122 permit tcp 172.18.190.0 0.0.1.255 172.18.186.240 0.0.0.31 eq 2000
+access-list 122 permit udp 172.18.190.0 0.0.1.255 172.18.186.240 0.0.0.31 eq 2000
+interface GigabitEthernet 0/2/0
+ip access-group 122 in
+exit

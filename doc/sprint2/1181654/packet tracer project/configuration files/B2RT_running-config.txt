@@ -1,0 +1,120 @@
+!
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname Router
+!
+!
+!
+!
+!
+ip dhcp pool VLANB2F0
+ network 172.18.186.192 255.255.255.224
+ default-router 172.18.186.193
+ip dhcp pool VLANB2F1
+ network 172.18.186.128 255.255.255.192
+ default-router 172.18.186.129
+ip dhcp pool VLANB2WF
+ network 172.18.186.0 255.255.255.128
+ default-router 172.18.186.1
+ip dhcp pool VLANB2DMZ
+ network 172.18.184.224 255.255.255.240
+ default-router 172.18.184.225
+ip dhcp pool VLANB2vip
+ network 172.18.186.240 255.255.255.240
+ default-router 172.18.186.241
+!
+!
+!
+no ip cef
+no ipv6 cef
+!
+!
+!
+!
+license udi pid CISCO2811/K9 sn FTX10170BU9-
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface FastEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface GigabitEthernet0/0/0
+ no ip address
+!
+interface GigabitEthernet0/0/0.1
+ encapsulation dot1Q 500
+ ip address 172.18.186.193 255.255.255.224
+!
+interface GigabitEthernet0/0/0.2
+ encapsulation dot1Q 501
+ ip address 172.18.186.129 255.255.255.192
+!
+interface GigabitEthernet0/0/0.3
+ encapsulation dot1Q 502
+ ip address 172.18.186.1 255.255.255.128
+!
+interface GigabitEthernet0/0/0.4
+ encapsulation dot1Q 503
+ ip address 172.18.186.225 255.255.255.240
+!
+interface GigabitEthernet0/0/0.5
+ encapsulation dot1Q 504
+ ip address 172.18.186.241 255.255.255.240
+!
+interface GigabitEthernet0/2/0
+ ip address 172.18.190.2 255.255.254.0
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+ip classless
+ip route 0.0.0.0 0.0.0.0 172.18.190.1 
+!
+ip flow-export version 9
+!
+!
+!
+!
+!
+!
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+!
+end
+

@@ -1,0 +1,52 @@
+
+
+
+
+/////////////////////////////////////////
+dns server:
+/////////////////////////////////////////
+
+set static ip in config interface
+
+default gateway:
+172.18.188.241
+
+DNS server:
+172.18.188.242
+
+DNS server ip and mask
+172.18.188.242
+255.255.255.240
+
+
+
+
+5.1. NS (Name Server) records and glue records
+
+(NS record) building-1.rcomp-21-22-na-g2 ns.building-1.rcomp-21-22-na-g2
+(A record) ns.building-1.rcomp-21-22-na-g2 172.18.184.130
+
+(NS record) building-2.rcomp-21-22-na-g2 ns.building-2.rcomp-21-22-na-g2
+(A record) ns.building-2.rcomp-21-22-na-g2 172.18.186.226
+
+(NS record) building-3.rcomp-21-22-na-g2 ns.building-3.rcomp-21-22-na-g2
+(A record) ns.building-3.rcomp-21-22-na-g2 172.18.187.194
+
+(NS record) building-4.rcomp-21-22-na-g2 ns.building-4.rcomp-21-22-na-g2
+(A record) ns.building-4.rcomp-21-22-na-g2 172.18.188.242
+
+(NS record) building-5.rcomp-21-22-na-g2 ns.building-5.rcomp-21-22-na-g2
+(A record) ns.building-5.rcomp-21-22-na-g2 172.18.189.226
+
+
+5.2. Other DNS records
+
+http (A record)     server1.building-4.rcomp-21-22-na-g2    172.18.188.243
+www (CNAME)         www.building-4.rcomp-21-22-na-g2        server1.building-4.rcomp-21-22-na-g2
+web (CNAME)         web.building-4.rcomp-21-22-na-g2        server1.building-4.rcomp-21-22-na-g2
+dns (CNAME)         dns.building-4.rcomp-21-22-na-g2        ns.building-4.rcomp-21-22-na-g2
+
+
+5.3. auto DNS
+
+already taken care of in "router settings for all buildings/b5router.txt"

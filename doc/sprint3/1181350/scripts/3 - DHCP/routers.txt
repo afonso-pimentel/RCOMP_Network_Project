@@ -1,0 +1,50 @@
+enable
+config terminal
+interface GigabitEthernet 0/0/0.1
+encapsulation dot1Q 500
+ip address 172.18.186.193 255.255.255.224
+interface GigabitEthernet 0/0/0.2
+encapsulation dot1Q 501
+ip address 172.18.186.129 255.255.255.192
+interface GigabitEthernet 0/0/0.3
+encapsulation dot1Q 502
+ip address 172.18.186.1 255.255.255.128
+interface GigabitEthernet 0/0/0.4
+encapsulation dot1Q 503
+ip address 172.18.186.225 255.255.255.240
+interface GigabitEthernet 0/0/0.5
+encapsulation dot1Q 504
+ip address 172.18.186.241 255.255.255.240
+interface GigabitEthernet 0/2/0
+ip address 172.18.190.2 255.255.254.0
+interface GigabitEthernet 0/0/0
+no shutdown
+interface GigabitEthernet 0/2/0
+no shutdown
+exit
+exit
+
+enable
+config terminal
+ip dhcp excluded-address 172.18.186.193 172.18.186.193
+ip dhcp pool VLANB2F0
+network 172.18.186.192 255.255.255.224
+default-router 172.18.186.193
+dns-server 172.18.186.226
+ip dhcp excluded-address 172.18.186.129 172.18.186.129
+ip dhcp pool VLANB2F1
+network 172.18.186.128 255.255.255.192
+default-router 172.18.186.129
+dns-server 172.18.186.226
+ip dhcp excluded-address 172.18.186.1 172.18.186.1
+ip dhcp pool VLANB2WF
+network 172.18.186.0 255.255.255.128
+default-router 172.18.186.1
+dns-server 172.18.186.226
+ip dhcp excluded-address 172.18.186.241 172.18.186.241
+ip dhcp pool VLANB2VIP
+default-router 172.18.186.241
+option 150 ip 172.18.186.241
+network 172.18.186.240 255.255.255.240
+exit
+exit

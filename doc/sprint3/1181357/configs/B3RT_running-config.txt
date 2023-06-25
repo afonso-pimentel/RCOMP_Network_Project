@@ -1,0 +1,207 @@
+!
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname Switch
+!
+!
+!
+!
+ip dhcp excluded-address 172.18.187.129
+ip dhcp excluded-address 172.18.187.65
+ip dhcp excluded-address 172.18.187.1
+ip dhcp excluded-address 172.18.187.225
+!
+ip dhcp pool VLANB3F0
+ network 172.18.187.128 255.255.255.192
+ default-router 172.18.187.129
+ dns-server 172.18.187.194
+ip dhcp pool VLANB3F1
+ network 172.18.187.64 255.255.255.192
+ default-router 172.18.187.65
+ dns-server 172.18.187.194
+ip dhcp pool VLANB3WF
+ network 172.18.187.0 255.255.255.192
+ default-router 172.18.187.1
+ dns-server 172.18.187.194
+ip dhcp pool VLANB3VIP
+ network 172.18.187.224 255.255.255.224
+ default-router 172.18.187.225
+ option 150 ip 172.18.187.225
+!
+!
+!
+no ip cef
+no ipv6 cef
+!
+!
+!
+!
+license udi pid CISCO2811/K9 sn FTX10172LWV-
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ no ip address
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/0/0
+ no ip address
+ ip access-group 131 in
+!
+interface GigabitEthernet0/0/0.1
+ encapsulation dot1Q 505
+ ip address 172.18.187.129 255.255.255.192
+!
+interface GigabitEthernet0/0/0.2
+ encapsulation dot1Q 506
+ ip address 172.18.187.65 255.255.255.192
+!
+interface GigabitEthernet0/0/0.3
+ encapsulation dot1Q 507
+ ip address 172.18.187.1 255.255.255.192
+!
+interface GigabitEthernet0/0/0.4
+ encapsulation dot1Q 508
+ ip address 172.18.187.193 255.255.255.224
+!
+interface GigabitEthernet0/0/0.5
+ encapsulation dot1Q 509
+ ip address 172.18.187.225 255.255.255.224
+!
+interface GigabitEthernet0/2/0
+ ip address 172.18.190.3 255.255.254.0
+ ip access-group 132 in
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+router ospf 1
+ log-adjacency-changes
+ network 172.18.187.0 0.0.0.255 area 3
+ network 172.18.190.0 0.0.1.255 area 0
+!
+ip classless
+!
+ip flow-export version 9
+!
+!
+access-list 131 permit ip 172.18.187.0 0.0.0.255 any
+access-list 131 permit icmp any any echo
+access-list 131 permit icmp any any echo-reply
+access-list 131 deny ip any 172.18.187.192 0.0.0.31
+access-list 131 permit udp 172.18.187.192 0.0.0.31 any eq domain
+access-list 131 permit tcp 172.18.187.192 0.0.0.31 any eq www
+access-list 131 permit tcp 172.18.187.192 0.0.0.31 any eq 443
+access-list 131 permit udp host 172.18.189.0 any eq bootps
+access-list 131 permit udp any host 172.18.189.0 eq bootpc
+access-list 131 permit tcp 172.18.187.224 0.0.0.31 any eq 2000
+access-list 131 permit udp 172.18.187.224 0.0.0.31 any eq 2000
+access-list 132 deny ip 172.18.187.0 0.0.0.255 any
+access-list 132 permit ip any any
+access-list 132 permit icmp any any echo
+access-list 132 permit icmp any any echo-reply
+access-list 132 permit ospf 172.18.190.0 0.0.1.255 host 172.18.190.3
+access-list 132 permit tcp 172.18.190.0 0.0.1.255 172.18.187.224 0.0.0.31 eq 2000
+access-list 132 permit udp 172.18.190.0 0.0.1.255 172.18.187.224 0.0.0.31 eq 2000
+!
+!
+!
+!
+!
+!
+dial-peer voice 31 voip
+ destination-pattern 1...
+ session target ipv4:172.18.190.6
+!
+dial-peer voice 32 voip
+ destination-pattern 2...
+ session target ipv4:172.18.190.2
+!
+dial-peer voice 34 voip
+ destination-pattern 4...
+ session target ipv4:172.18.190.4
+!
+dial-peer voice 35 voip
+ destination-pattern 5...
+ session target ipv4:172.18.190.5
+!
+telephony-service
+ max-ephones 4
+ max-dn 4
+ ip source-address 172.18.187.225 port 2000
+ auto assign 1 to 4
+!
+ephone-dn 1
+ number 3001
+!
+ephone-dn 2
+ number 3002
+!
+ephone-dn 3
+ number 3003
+!
+ephone-dn 4
+ number 3004
+!
+ephone 1
+ device-security-mode none
+ mac-address 0001.636D.151C
+ type 7960
+ button 1:1
+!
+ephone 2
+ device-security-mode none
+ mac-address 000A.F3BD.8B75
+ type 7960
+ button 1:2
+!
+ephone 3
+ device-security-mode none
+ mac-address 0090.2B78.2329
+ type 7960
+ button 1:3
+!
+ephone 4
+ device-security-mode none
+ mac-address 00E0.A3DA.A443
+ type 7960
+ button 1:4
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+line vty 5 15
+ login
+!
+!
+!
+end
+

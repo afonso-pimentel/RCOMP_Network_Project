@@ -1,0 +1,53 @@
+config terminal
+interface FastEthernet 0/0.1
+encapsulation dot1Q 500
+ip address 172.18.186.193 255.255.255.224
+interface FastEthernet 0/0.2
+encapsulation dot1Q 501
+ip address 172.18.186.129 255.255.255.192
+interface FastEthernet 0/0.3
+encapsulation dot1Q 502
+ip address 172.18.186.1 255.255.255.128
+interface FastEthernet 0/0.4
+encapsulation dot1Q 503
+ip address 172.18.186.225 255.255.255.240
+interface FastEthernet 0/0.5
+encapsulation dot1Q 504
+ip address 172.18.186.241 255.255.255.240
+interface FastEthernet 0/1
+ip address 172.18.190.2 255.255.254.0
+interface FastEthernet 0/0
+no shutdown
+interface FastEthernet 0/1
+no shutdown
+exit
+exit
+show ip interface brief
+
+
+
+config terminal
+interface FastEthernet 0/0.1
+encapsulation dot1Q 515
+ip address 172.18.189.129 255.255.255.192
+interface FastEthernet 0/0.2
+encapsulation dot1Q 516
+ip address 172.18.189.65 255.255.255.192
+interface FastEthernet 0/0.3
+encapsulation dot1Q 517
+ip address 172.18.189.1 255.255.255.192
+interface FastEthernet 0/0.4
+encapsulation dot1Q 518
+ip address 172.18.189.225 255.255.255.224
+interface FastEthernet 0/0.5
+encapsulation dot1Q 519
+ip address 172.18.189.193 255.255.255.224
+interface FastEthernet 0/1
+ip address 172.18.190.1 255.255.254.0
+interface FastEthernet 0/0
+no shutdown
+interface FastEthernet 0/1
+no shutdown
+exit
+exit
+show ip interface brief

@@ -1,2 +1,13 @@
-# RCOMP_Network_Project
-This is a complete project with the mock configuration of a whole university's network, starting with a dimensioning of the network, with the initial definition in packet tracer, and finishing with the configuration of the whole protocols. DHCP, VLANs, and much more.
+RCOMP 2021-2022 Project repository template
+===========================================
+# 1. Team members (update this information please) #
+  * 1151399 - Afonso Pimentel 
+  * 1181350 - Ricardo Ribeiro 
+  * 1181357 - Rui Rafael
+  * 1181544 - Pedro Matias
+  * 1181654 - José Pinto     
+
+# 2. Sprints #
+  * [Sprint 1](doc/sprint1/)
+  * [Sprint 2](doc/sprint2/)
+  * [Sprint 3](doc/sprint3/)

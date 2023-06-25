@@ -1,0 +1,37 @@
+enable 
+
+config terminal
+
+ip dhcp pool VLANB3F0
+
+network 172.18.187.128 255.255.255.192
+
+default-router 172.18.187.129
+
+ip dhcp pool VLANB3F1
+
+network 172.18.187.64 255.255.255.192
+
+default-router 172.18.187.65
+
+ip dhcp pool VLANB3WF
+
+network 172.18.187.0 255.255.255.192
+
+default-router 172.18.187.1
+
+ip dhcp pool VLANB3DMZ
+
+network 172.18.187.192 255.255.255.224
+
+default-router 172.18.187.193
+
+ip dhcp pool VLANB3VIP
+
+network  172.18.187.224 255.255.255.224
+
+default-router 172.18.187.225
+
+exit
+
+exit

@@ -1,0 +1,89 @@
+
+//////////////////////////////////////////
+# (MC router) backbone
+//////////////////////////////////////////
+todo: what do i do for the internet??
+
+enable
+config terminal
+router ospf 1
+network 172.18.184.0 0.0.1.255 area 1
+network 172.18.186.0 0.0.0.255 area 2
+network 172.18.187.0 0.0.0.255 area 3
+network 172.18.188.0 0.0.0.255 area 4
+network 172.18.189.0 0.0.0.255 area 5
+network 172.18.190.0 0.0.1.255 area 0
+exit
+exit
+
+config terminal
+ip route 0.0.0.0 0.0.0.0 15.203.48.170
+router ospf 1
+default-information originate
+exit
+exit
+
+
+
+//////////////////////////////////////////
+# Building 1 (IC router)
+//////////////////////////////////////////
+
+enable
+config terminal
+router ospf 1
+network 172.18.184.0 0.0.1.255 area 1
+network 172.18.190.0 0.0.1.255 area 0
+exit
+exit
+
+//////////////////////////////////////////
+# Building 2 (IC router)
+//////////////////////////////////////////
+
+enable
+config terminal
+router ospf 1
+network 172.18.186.0 0.0.0.255 area 2
+network 172.18.190.0 0.0.1.255 area 0
+exit
+exit
+
+
+//////////////////////////////////////////
+# Building 3 (IC router)
+//////////////////////////////////////////
+
+enable
+config terminal
+router ospf 1
+network 172.18.187.0 0.0.0.255 area 3
+network 172.18.190.0 0.0.1.255 area 0
+exit
+exit
+
+
+//////////////////////////////////////////
+# Building 4 (IC router)
+//////////////////////////////////////////
+
+enable
+config terminal
+router ospf 1
+network 172.18.188.0 0.0.0.255 area 4
+network 172.18.190.0 0.0.1.255 area 0
+exit
+exit
+
+
+//////////////////////////////////////////
+# Building 5 (IC router)
+//////////////////////////////////////////
+
+enable
+config terminal
+router ospf 1
+network 172.18.189.0 0.0.0.255 area 5
+network 172.18.190.0 0.0.1.255 area 0
+exit
+exit

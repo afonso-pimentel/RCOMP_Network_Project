@@ -1,0 +1,24 @@
+////////////////////////////////////////////////////////////////////
+(run on building 1 MC router)
+////////////////////////////////////////////////////////////////////
+
+
+# HTTP HTTPS use TCP on ports 80 and 443:
+
+config terminal
+interface Gig0/0/0
+ip nat inside
+interface Gig0/2/0
+ip nat outside
+ip nat inside source static tcp 172.18.184.131 80 15.203.48.169 10011
+ip nat inside source static tcp 172.18.184.131 443 15.203.48.169 10012
+exit
+
+
+$ DNS use UDP and TCP on port 53:
+
+config terminal
+ip nat inside source static tcp 172.18.184.130 53 15.203.48.169 10013
+ip nat inside source static udp 172.18.184.130 53 15.203.48.169 10013
+exit
+

@@ -1,0 +1,69 @@
+
+
+
+
+////////////////////////////////////////////////////////////////////
+(run on building 5 IC router)
+////////////////////////////////////////////////////////////////////
+(script for running on router)
+
+enable
+config terminal
+no access-list 141
+access-list 141 permit ip 172.18.188.0 0.0.0.255 any
+access-list 141 permit icmp any any echo
+access-list 141 permit icmp any any echo-reply
+access-list 141 deny ip any 172.18.188.240 0.0.0.31
+access-list 141 permit udp 172.18.188.240 0.0.0.31 any eq 53
+access-list 141 permit tcp 172.18.188.240 0.0.0.31 any eq 53
+access-list 141 permit tcp 172.18.188.240 0.0.0.31 any eq 80
+access-list 141 permit tcp 172.18.188.240 0.0.0.31 any eq 443
+access-list 141 permit udp 172.18.188.0 0.0.0.0 any eq 67
+access-list 141 permit udp any 172.18.188.0 0.0.0.0 eq 68
+access-list 141 permit tcp 172.18.188.224 0.0.0.31 any eq 2000
+access-list 141 permit udp 172.18.188.224 0.0.0.31 any eq 2000
+interface GigabitEthernet 0/0/0
+ip access-group 141 in
+exit
+
+
+
+config terminal
+no access-list 142
+access-list 142 deny ip 172.18.188.0 0.0.0.255 any
+access-list 142 permit ip any any
+access-list 142 permit icmp any any echo
+access-list 142 permit icmp any any echo-reply
+access-list 142 permit ospf 172.18.190.0 0.0.1.255 172.18.190.4 0.0.0.0
+access-list 142 permit tcp 172.18.190.0 0.0.1.255 172.18.188.224 0.0.0.31 eq 2000
+access-list 142 permit udp 172.18.190.0 0.0.1.255 172.18.188.224 0.0.0.31 eq 2000
+interface GigabitEthernet 0/2/0
+ip access-group 142 in
+exit
+
+
+
+
+
+
+notes: 
+
+External spoofing: this applies to incoming traffic to a local network, for the
+sake of the local network’s security, any incoming packet with a source address
+belonging to the local network is spoofing and should be blocked.
+
+Internal spoofing: this applies to outgoing traffic from a local network, for the
+sake of other networks’ security, any outgoing packet with a source address
+that doesn’t belong to the local network, is spoofing and should be blocked.
+
+
+access-list NNN ACTION PROTOCOL SOURCE-IP-ADDRESS DESTINATION-IP-ADDRESS
+
+
+test with PDU tool:
+select pdu tool 
+select test pc (the one after ISP)
+destination: 172.18.189.130
+source: 172.18.189.67
+Define sequence number as 1, and one shot time as 5 seconds.
+
